@@ -763,8 +763,9 @@ class StatesHandler(webapp2.RequestHandler):
       logging.info('Recomputing states totals.')
       memcache.set(StatesHandler.TIME_KEY, now)
       totals = {}
+      allUsers = model.User.all()
       for pledge in model.Pledge.all():
-        user = model.User.all().filter('email =', pledge.email).get()
+        user = allUsers.filter('email =', pledge.email).get()
         totals.setdefault(user.state, 0)
         totals[user.state] += min(pledge.amountCents, 25000) # max $250
       for state, total in totals.iteritems():
