@@ -794,7 +794,7 @@ class StatesHandler(webapp2.RequestHandler):
     now = calendar.timegm(time.gmtime())
     then = memcache.get(StatesHandler.TIME_KEY)
     old = memcache.get(StatesHandler.VALUE_KEY)
-    if old and ((now - then) < (10 * 60)):
+    if old and ((now - then) < (60 * 60)):
       self.response.write(old)
     else:
       logging.info('Recomputing states totals.')
